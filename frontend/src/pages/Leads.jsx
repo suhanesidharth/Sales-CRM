@@ -61,8 +61,8 @@ const Leads = () => {
   const fetchData = async () => {
     try {
       const params = {};
-      if (filterStage) params.stage = filterStage;
-      if (filterStatus) params.status = filterStatus;
+      if (filterStage && filterStage !== 'all') params.stage = filterStage;
+      if (filterStatus && filterStatus !== 'all') params.status = filterStatus;
       const [leadsRes, orgsRes] = await Promise.all([
         getLeads(params),
         getOrganizations()
