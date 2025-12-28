@@ -176,7 +176,7 @@ const Organizations = () => {
             <SelectValue placeholder="All types" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All types</SelectItem>
+            <SelectItem value="all">All types</SelectItem>
             {ORG_TYPES.map(type => (
               <SelectItem key={type} value={type}>{type}</SelectItem>
             ))}
