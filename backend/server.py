@@ -755,7 +755,8 @@ async def get_dashboard_analytics(user: dict = Depends(get_current_user)):
         "leads_by_status": leads_by_status,
         "leads_by_org_type": leads_by_org_type,
         "pipeline_value": pipeline_value,
-        "won_value": won_value,
+        "won_offered": won_offered,
+        "won_agreed": won_agreed,
         "win_rate": round(win_rate, 1),
         "avg_probability": round(avg_probability, 1) if avg_probability else 0
     }
