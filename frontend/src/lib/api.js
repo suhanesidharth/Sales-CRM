@@ -7,6 +7,14 @@ export const getOrgTypes = () => axios.get(`${API_URL}/org-types`);
 export const createOrgType = (data) => axios.post(`${API_URL}/org-types`, data);
 export const deleteOrgType = (id) => axios.delete(`${API_URL}/org-types/${id}`);
 
+// Lead Stages (Custom)
+export const getLeadStages = () => axios.get(`${API_URL}/lead-stages`);
+export const createLeadStage = (data) => axios.post(`${API_URL}/lead-stages`, data);
+export const deleteLeadStage = (id) => axios.delete(`${API_URL}/lead-stages/${id}`);
+
+// Indian States
+export const getIndianStates = () => axios.get(`${API_URL}/indian-states`);
+
 // Organizations
 export const getOrganizations = (params) => axios.get(`${API_URL}/organizations`, { params });
 export const getOrganization = (id) => axios.get(`${API_URL}/organizations/${id}`);
@@ -44,5 +52,12 @@ export const createSalesFlow = (data) => axios.post(`${API_URL}/sales-flow`, dat
 export const updateSalesFlow = (id, data) => axios.put(`${API_URL}/sales-flow/${id}`, data);
 export const deleteSalesFlow = (id) => axios.delete(`${API_URL}/sales-flow/${id}`);
 
+// Team Management
+export const getTeamMembers = () => axios.get(`${API_URL}/team`);
+export const inviteTeamMember = (data) => axios.post(`${API_URL}/team/invite`, data);
+export const updateTeamMember = (id, data) => axios.put(`${API_URL}/team/${id}`, data);
+export const removeTeamMember = (id) => axios.delete(`${API_URL}/team/${id}`);
+
 // Analytics
 export const getDashboardAnalytics = () => axios.get(`${API_URL}/analytics/dashboard`);
+export const getGeographyAnalytics = () => axios.get(`${API_URL}/analytics/geography`);
