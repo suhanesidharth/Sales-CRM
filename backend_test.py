@@ -531,17 +531,25 @@ def main():
         ("Auth Me", tester.test_auth_me),
         ("API Root", tester.test_api_root),
         
+        # Organization Types tests (NEW)
+        ("Get Organization Types", tester.test_get_org_types),
+        ("Create Organization Type", tester.test_create_org_type),
+        
         # Organization tests
         ("Create Organization", tester.test_create_organization),
         ("Get Organizations", tester.test_get_organizations),
         ("Get Organization by ID", tester.test_get_organization_by_id),
         ("Update Organization", tester.test_update_organization),
         
-        # Lead tests
+        # Lead tests (with dual pricing)
         ("Create Lead", tester.test_create_lead),
         ("Get Leads", tester.test_get_leads),
         ("Get Lead by ID", tester.test_get_lead_by_id),
         ("Update Lead", tester.test_update_lead),
+        
+        # Lead Notes tests (NEW)
+        ("Create Lead Note", tester.test_create_lead_note),
+        ("Get Lead Notes", tester.test_get_lead_notes),
         
         # Milestone tests
         ("Create Milestone", tester.test_create_milestone),
