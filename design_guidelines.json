@@ -1,0 +1,132 @@
+{
+  "design_system": {
+    "identity": {
+      "name": "Flux CRM",
+      "archetype": "Deep Space Command",
+      "vibe": "High-precision, dense, electric, authoritative",
+      "principles": [
+        "Density is clarity: Use tight spacing for data, wide spacing for structure",
+        "Black over Grey: Use pure black (#000000) and near-black (#050505) with borders, not varying shades of grey backgrounds",
+        "Neon Accents: Color is for status and action only. Everything else is monochrome",
+        "Sharp Edges: Rounded corners max 6px (rounded-md). No pill shapes for containers"
+      ]
+    },
+    "typography": {
+      "font_family": {
+        "headings": "Plus Jakarta Sans, sans-serif",
+        "body": "Inter, sans-serif",
+        "mono": "JetBrains Mono, monospace"
+      },
+      "scale": {
+        "h1": "text-3xl font-bold tracking-tight lg:text-4xl",
+        "h2": "text-2xl font-semibold tracking-tight",
+        "h3": "text-xl font-semibold tracking-tight",
+        "body": "text-sm leading-relaxed",
+        "small": "text-xs font-medium text-muted-foreground",
+        "mono_data": "font-mono text-xs tracking-wide"
+      }
+    },
+    "colors": {
+      "mode": "dark",
+      "palette": {
+        "background": "#050505",
+        "foreground": "#fafafa",
+        "card": "#0A0A0A",
+        "card_foreground": "#fafafa",
+        "popover": "#0A0A0A",
+        "popover_foreground": "#fafafa",
+        "primary": "#6366f1",
+        "primary_foreground": "#ffffff",
+        "secondary": "#27272a",
+        "secondary_foreground": "#fafafa",
+        "muted": "#18181b",
+        "muted_foreground": "#a1a1aa",
+        "accent": "#27272a",
+        "accent_foreground": "#fafafa",
+        "destructive": "#ef4444",
+        "destructive_foreground": "#fafafa",
+        "border": "#27272a",
+        "input": "#27272a",
+        "ring": "#6366f1"
+      },
+      "chart_colors": [
+        "#6366f1",
+        "#14b8a6",
+        "#f59e0b",
+        "#ec4899",
+        "#8b5cf6"
+      ]
+    },
+    "layout": {
+      "grid_system": "Mode B: Control Room",
+      "spacing": {
+        "container_padding": "p-6 md:p-8",
+        "section_gap": "gap-6",
+        "widget_gap": "gap-4"
+      },
+      "structure": {
+        "sidebar_width": "w-64",
+        "header_height": "h-16",
+        "max_width": "max-w-[1600px]"
+      }
+    },
+    "components": {
+      "buttons": {
+        "default": "rounded-md font-medium transition-all active:scale-95",
+        "primary": "bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_0_15px_rgba(99,102,241,0.3)]",
+        "ghost": "hover:bg-accent hover:text-accent-foreground"
+      },
+      "cards": {
+        "style": "bg-card border border-border rounded-md shadow-none",
+        "hover": "hover:border-primary/50 transition-colors duration-300"
+      },
+      "inputs": {
+        "style": "bg-background border-input focus:ring-1 focus:ring-primary rounded-md"
+      },
+      "tables": {
+        "style": "w-full caption-bottom text-sm",
+        "header": "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
+        "row": "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted"
+      }
+    },
+    "visual_enhancers": {
+      "glassmorphism": "backdrop-blur-xl bg-black/40 border-b border-white/10",
+      "gradients": "None for backgrounds. Use subtle radial gradients for 'spotlight' effects on hover only",
+      "borders": "1px solid #27272a (Zinc 800)",
+      "shadows": "shadow-sm"
+    },
+    "assets": {
+      "images": {
+        "organization_placeholders": [
+          "https://images.unsplash.com/photo-1641760378661-6f290a50a62d?crop=entropy&cs=srgb&fm=jpg&q=85",
+          "https://images.unsplash.com/photo-1636142466028-8c6c7cd616b7?crop=entropy&cs=srgb&fm=jpg&q=85",
+          "https://images.unsplash.com/photo-1636142426623-98a21fe2fb8f?crop=entropy&cs=srgb&fm=jpg&q=85",
+          "https://images.unsplash.com/photo-1761157995927-54b10202f92f?crop=entropy&cs=srgb&fm=jpg&q=85"
+        ],
+        "avatars": [
+          "https://images.unsplash.com/photo-1650784854945-264d5b0b6b07?crop=entropy&cs=srgb&fm=jpg&q=85",
+          "https://images.unsplash.com/photo-1650784855038-9f4d5ed154a9?crop=entropy&cs=srgb&fm=jpg&q=85",
+          "https://images.unsplash.com/photo-1650784854790-fb6c2ed400d3?crop=entropy&cs=srgb&fm=jpg&q=85",
+          "https://images.unsplash.com/photo-1650784854863-d8c77b04926e?crop=entropy&cs=srgb&fm=jpg&q=85"
+        ]
+      },
+      "icons": "lucide-react"
+    },
+    "instructions_to_main_agent": {
+      "file_extensions": "Use .jsx for components and .js for logic files. Do not use .tsx or .ts.",
+      "styling_strategy": "Use Tailwind utility classes for everything. Avoid custom CSS files unless for complex animations.",
+      "charting": "Use Recharts. Style the Tooltip to match the dark theme (bg-zinc-950 border-zinc-800).",
+      "data_testid": "Every interactive element (button, input, link) MUST have a data-testid attribute (e.g., data-testid='login-submit').",
+      "layout_rules": "Always use a SidebarLayout wrapper for authenticated pages. Use a simple CenteredLayout for auth pages.",
+      "state_management": "Use React Context or simple useState for local state. Do not introduce Redux unless absolutely necessary."
+    }
+  },
+  "universal_guidelines": [
+    "Do not use gradients for main backgrounds. Use solid #050505.",
+    "Ensure all text has sufficient contrast. Use text-zinc-400 for secondary text, not text-zinc-600.",
+    "Use 'sonner' for toast notifications.",
+    "For dates, use 'date-fns' for formatting.",
+    "Never leave an image alt tag empty.",
+    "Mock data should look realistic (e.g., 'Stark Industries', 'Wayne Enterprises' for orgs)."
+  ]
+}
