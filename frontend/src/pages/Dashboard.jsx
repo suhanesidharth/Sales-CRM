@@ -147,15 +147,27 @@ const Dashboard = () => {
       </div>
 
       {/* Secondary Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
         <Card className="bg-card border-border">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Won Value</CardTitle>
+            <CardTitle className="text-sm font-medium text-muted-foreground">Won (Offered)</CardTitle>
             <Trophy className="h-4 w-4 text-teal-400" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold font-mono text-teal-400">
-              {formatCurrency(analytics?.won_value || 0)}
+              {formatCurrency(analytics?.won_offered || 0)}
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-card border-border">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">Won (Agreed)</CardTitle>
+            <DollarSign className="h-4 w-4 text-green-400" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold font-mono text-green-400">
+              {formatCurrency(analytics?.won_agreed || 0)}
             </div>
           </CardContent>
         </Card>
