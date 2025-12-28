@@ -15,6 +15,8 @@ class FluxCRMTester:
         self.milestone_id = None
         self.document_id = None
         self.flow_id = None
+        self.org_type_id = None
+        self.lead_note_id = None
 
     def run_test(self, name, method, endpoint, expected_status, data=None, params=None):
         """Run a single API test"""
