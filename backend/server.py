@@ -32,15 +32,104 @@ security = HTTPBearer()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# ==================== INDIAN STATES ====================
-INDIAN_STATES = [
-    "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
-    "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka",
-    "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram",
-    "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu",
-    "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal",
-    "Delhi", "Jammu and Kashmir", "Ladakh", "Puducherry", "Chandigarh"
-]
+# ==================== COUNTRIES AND REGIONS ====================
+COUNTRIES_DATA = {
+    "India": {
+        "regions": [
+            "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
+            "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka",
+            "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram",
+            "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu",
+            "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal",
+            "Delhi", "Jammu and Kashmir", "Ladakh", "Puducherry", "Chandigarh"
+        ],
+        "currency": "INR",
+        "currency_symbol": "₹"
+    },
+    "United States": {
+        "regions": [
+            "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado",
+            "Connecticut", "Delaware", "Florida", "Georgia", "Hawaii", "Idaho",
+            "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana",
+            "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi",
+            "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey",
+            "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma",
+            "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota",
+            "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington",
+            "West Virginia", "Wisconsin", "Wyoming"
+        ],
+        "currency": "USD",
+        "currency_symbol": "$"
+    },
+    "United Kingdom": {
+        "regions": [
+            "England", "Scotland", "Wales", "Northern Ireland",
+            "Greater London", "South East", "South West", "East of England",
+            "West Midlands", "East Midlands", "Yorkshire", "North West", "North East"
+        ],
+        "currency": "GBP",
+        "currency_symbol": "£"
+    },
+    "Germany": {
+        "regions": [
+            "Baden-Württemberg", "Bavaria", "Berlin", "Brandenburg", "Bremen",
+            "Hamburg", "Hesse", "Lower Saxony", "Mecklenburg-Vorpommern",
+            "North Rhine-Westphalia", "Rhineland-Palatinate", "Saarland",
+            "Saxony", "Saxony-Anhalt", "Schleswig-Holstein", "Thuringia"
+        ],
+        "currency": "EUR",
+        "currency_symbol": "€"
+    },
+    "Australia": {
+        "regions": [
+            "New South Wales", "Victoria", "Queensland", "Western Australia",
+            "South Australia", "Tasmania", "Northern Territory", "Australian Capital Territory"
+        ],
+        "currency": "AUD",
+        "currency_symbol": "A$"
+    },
+    "Canada": {
+        "regions": [
+            "Ontario", "Quebec", "British Columbia", "Alberta", "Manitoba",
+            "Saskatchewan", "Nova Scotia", "New Brunswick", "Newfoundland and Labrador",
+            "Prince Edward Island", "Northwest Territories", "Yukon", "Nunavut"
+        ],
+        "currency": "CAD",
+        "currency_symbol": "C$"
+    },
+    "UAE": {
+        "regions": [
+            "Abu Dhabi", "Dubai", "Sharjah", "Ajman", "Umm Al Quwain",
+            "Ras Al Khaimah", "Fujairah"
+        ],
+        "currency": "AED",
+        "currency_symbol": "د.إ"
+    },
+    "Singapore": {
+        "regions": ["Central", "North", "North-East", "East", "West"],
+        "currency": "SGD",
+        "currency_symbol": "S$"
+    },
+    "Japan": {
+        "regions": [
+            "Hokkaido", "Tohoku", "Kanto", "Chubu", "Kinki",
+            "Chugoku", "Shikoku", "Kyushu", "Okinawa"
+        ],
+        "currency": "JPY",
+        "currency_symbol": "¥"
+    },
+    "Brazil": {
+        "regions": [
+            "São Paulo", "Rio de Janeiro", "Minas Gerais", "Bahia", "Paraná",
+            "Rio Grande do Sul", "Pernambuco", "Ceará", "Pará", "Santa Catarina"
+        ],
+        "currency": "BRL",
+        "currency_symbol": "R$"
+    }
+}
+
+# For backward compatibility
+INDIAN_STATES = COUNTRIES_DATA["India"]["regions"]
 
 # ==================== MODELS ====================
 
