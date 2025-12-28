@@ -2,6 +2,11 @@ import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL + '/api';
 
+// Organization Types
+export const getOrgTypes = () => axios.get(`${API_URL}/org-types`);
+export const createOrgType = (data) => axios.post(`${API_URL}/org-types`, data);
+export const deleteOrgType = (id) => axios.delete(`${API_URL}/org-types/${id}`);
+
 // Organizations
 export const getOrganizations = (params) => axios.get(`${API_URL}/organizations`, { params });
 export const getOrganization = (id) => axios.get(`${API_URL}/organizations/${id}`);
@@ -15,6 +20,11 @@ export const getLead = (id) => axios.get(`${API_URL}/leads/${id}`);
 export const createLead = (data) => axios.post(`${API_URL}/leads`, data);
 export const updateLead = (id, data) => axios.put(`${API_URL}/leads/${id}`, data);
 export const deleteLead = (id) => axios.delete(`${API_URL}/leads/${id}`);
+
+// Lead Notes/Updates
+export const getLeadNotes = (params) => axios.get(`${API_URL}/lead-notes`, { params });
+export const createLeadNote = (data) => axios.post(`${API_URL}/lead-notes`, data);
+export const deleteLeadNote = (id) => axios.delete(`${API_URL}/lead-notes/${id}`);
 
 // Milestones
 export const getMilestones = (params) => axios.get(`${API_URL}/milestones`, { params });
