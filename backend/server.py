@@ -290,6 +290,51 @@ async def login(user: UserLogin):
 async def get_me(user: dict = Depends(get_current_user)):
     return UserResponse(id=user["id"], email=user["email"], name=user["name"], created_at=user["created_at"])
 
+# ==================== ORGANIZATION TYPES ROUTES ====================
+
+DEFAULT_ORG_TYPES = [
+    {"id": "default-hospital", "name": "HOSPITAL", "color": "bg-blue-500/20 text-blue-400 border-blue-500/30", "is_default": True},
+    {"id": "default-ngo", "name": "NGO", "color": "bg-green-500/20 text-green-400 border-green-500/30", "is_default": True},
+    {"id": "default-govt", "name": "GOVT", "color": "bg-amber-500/20 text-amber-400 border-amber-500/30", "is_default": True},
+    {"id": "default-corporate", "name": "CORPORATE", "color": "bg-purple-500/20 text-purple-400 border-purple-500/30", "is_default": True},
+]
+
+@api_router.get("/org-types", response_model=List[OrgTypeResponse])
+async def get_org_types(user: dict = Depends(get_current_user)):
+    # Get custom types from DB
+    custom_types = await db.org_types.find({}, {"_id": 0}).to_list(1000)
+    # Combine with defaults
+    all_types = DEFAULT_ORG_TYPES + [OrgTypeResponse(**t).model_dump() for t in custom_types]
+    return [OrgTypeResponse(**t) for t in all_types]
+
+@api_router.post("/org-types", response_model=OrgTypeResponse)
+async def create_org_type(org_type: OrgTypeCreate, user: dict = Depends(get_current_user)):
+    # Check if type name already exists
+    existing = await db.org_types.find_one({"name": org_type.name.upper()})
+    if existing or any(t["name"] == org_type.name.upper() for t in DEFAULT_ORG_TYPES):
+        raise HTTPException(status_code=400, detail="Organization type already exists")
+    
+    type_id = str(uuid.uuid4())
+    type_doc = {
+        "id": type_id,
+        "name": org_type.name.upper(),
+        "color": org_type.color,
+        "is_default": False
+    }
+    await db.org_types.insert_one(type_doc)
+    return OrgTypeResponse(**type_doc)
+
+@api_router.delete("/org-types/{type_id}")
+async def delete_org_type(type_id: str, user: dict = Depends(get_current_user)):
+    # Can't delete default types
+    if type_id.startswith("default-"):
+        raise HTTPException(status_code=400, detail="Cannot delete default organization type")
+    
+    result = await db.org_types.delete_one({"id": type_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Organization type not found")
+    return {"message": "Organization type deleted"}
+
 # ==================== ORGANIZATION ROUTES ====================
 
 @api_router.post("/organizations", response_model=OrganizationResponse)
@@ -375,7 +420,8 @@ async def create_lead(lead: LeadCreate, user: dict = Depends(get_current_user)):
         "lead_name": lead.lead_name,
         "organization_id": lead.organization_id,
         "product": lead.product,
-        "proposed_price": lead.proposed_price,
+        "offered_price": lead.offered_price,
+        "agreed_price": lead.agreed_price,
         "expected_volume": lead.expected_volume,
         "stage": lead.stage,
         "probability": lead.probability,
