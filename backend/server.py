@@ -78,12 +78,24 @@ class OrganizationResponse(BaseModel):
     created_at: str
     lead_count: int = 0
 
+# Organization Type Models (Custom Types)
+class OrgTypeCreate(BaseModel):
+    name: str
+    color: str = "bg-slate-500/20 text-slate-400 border-slate-500/30"
+
+class OrgTypeResponse(BaseModel):
+    id: str
+    name: str
+    color: str
+    is_default: bool = False
+
 # Lead Models
 class LeadCreate(BaseModel):
     lead_name: str
     organization_id: str
     product: str
-    proposed_price: Optional[float] = None
+    offered_price: Optional[float] = None  # Price we offer
+    agreed_price: Optional[float] = None   # Final agreed price
     expected_volume: Optional[int] = None
     stage: str = "IDENTIFIED"  # IDENTIFIED, QUALIFIED, DEMO, PILOT, COMMERCIAL, CLOSED
     probability: int = 10
@@ -96,7 +108,8 @@ class LeadCreate(BaseModel):
 class LeadUpdate(BaseModel):
     lead_name: Optional[str] = None
     product: Optional[str] = None
-    proposed_price: Optional[float] = None
+    offered_price: Optional[float] = None
+    agreed_price: Optional[float] = None
     expected_volume: Optional[int] = None
     stage: Optional[str] = None
     probability: Optional[int] = None
@@ -114,7 +127,8 @@ class LeadResponse(BaseModel):
     organization_name: Optional[str] = None
     organization_type: Optional[str] = None
     product: str
-    proposed_price: Optional[float] = None
+    offered_price: Optional[float] = None
+    agreed_price: Optional[float] = None
     expected_volume: Optional[int] = None
     stage: str
     probability: int
@@ -123,6 +137,20 @@ class LeadResponse(BaseModel):
     sales_owner: str
     source: Optional[str] = None
     remarks: Optional[str] = None
+    created_at: str
+
+# Lead Update/Notes Models (for daily/weekly updates)
+class LeadNoteCreate(BaseModel):
+    lead_id: str
+    content: str
+    update_type: str = "GENERAL"  # GENERAL, DAILY, WEEKLY, CALL, MEETING, EMAIL
+
+class LeadNoteResponse(BaseModel):
+    id: str
+    lead_id: str
+    content: str
+    update_type: str
+    created_by: str
     created_at: str
 
 # Milestone Models
