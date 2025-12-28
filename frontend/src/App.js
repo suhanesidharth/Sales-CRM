@@ -9,10 +9,12 @@ import OrganizationDetail from "./pages/OrganizationDetail";
 import Leads from "./pages/Leads";
 import LeadDetail from "./pages/LeadDetail";
 import SalesFlow from "./pages/SalesFlow";
+import Geography from "./pages/Geography";
+import TeamManagement from "./pages/TeamManagement";
 import SidebarLayout from "./components/SidebarLayout";
 
-const ProtectedRoute = ({ children }) => {
-  const { user, loading } = useAuth();
+const ProtectedRoute = ({ children, adminOnly = false }) => {
+  const { user, loading, isAdmin } = useAuth();
   
   if (loading) {
     return (
@@ -24,6 +26,10 @@ const ProtectedRoute = ({ children }) => {
   
   if (!user) {
     return <Navigate to="/login" replace />;
+  }
+
+  if (adminOnly && !isAdmin) {
+    return <Navigate to="/dashboard" replace />;
   }
   
   return <SidebarLayout>{children}</SidebarLayout>;
@@ -60,6 +66,8 @@ function App() {
           <Route path="/leads" element={<ProtectedRoute><Leads /></ProtectedRoute>} />
           <Route path="/leads/:id" element={<ProtectedRoute><LeadDetail /></ProtectedRoute>} />
           <Route path="/sales-flow" element={<ProtectedRoute><SalesFlow /></ProtectedRoute>} />
+          <Route path="/geography" element={<ProtectedRoute><Geography /></ProtectedRoute>} />
+          <Route path="/team" element={<ProtectedRoute adminOnly><TeamManagement /></ProtectedRoute>} />
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
         </Routes>
       </BrowserRouter>
