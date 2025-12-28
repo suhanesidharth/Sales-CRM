@@ -190,15 +190,25 @@ const Leads = () => {
                   />
                 </div>
               </div>
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-4 gap-4">
                 <div className="space-y-2">
-                  <Label>Proposed Price</Label>
+                  <Label>Offered Price</Label>
                   <Input
                     type="number"
-                    value={formData.proposed_price}
-                    onChange={(e) => setFormData({ ...formData, proposed_price: e.target.value })}
-                    placeholder="0"
-                    data-testid="lead-price-input"
+                    value={formData.offered_price}
+                    onChange={(e) => setFormData({ ...formData, offered_price: e.target.value })}
+                    placeholder="Our price"
+                    data-testid="lead-offered-price-input"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Agreed Price</Label>
+                  <Input
+                    type="number"
+                    value={formData.agreed_price}
+                    onChange={(e) => setFormData({ ...formData, agreed_price: e.target.value })}
+                    placeholder="Final price"
+                    data-testid="lead-agreed-price-input"
                   />
                 </div>
                 <div className="space-y-2">
