@@ -440,7 +440,7 @@ const Leads = () => {
                             </Badge>
                           </td>
                           <td className="p-4 font-mono text-sm">
-                            {lead.proposed_price ? `$${lead.proposed_price.toLocaleString()}` : '-'}
+                            {lead.offered_price ? `$${lead.offered_price.toLocaleString()}` : '-'}
                           </td>
                           <td className="p-4 text-muted-foreground">{lead.sales_owner}</td>
                           <td className="p-4 text-right">
