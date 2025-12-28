@@ -43,7 +43,8 @@ const Leads = () => {
     lead_name: '',
     organization_id: '',
     product: '',
-    proposed_price: '',
+    offered_price: '',
+    agreed_price: '',
     expected_volume: '',
     stage: 'IDENTIFIED',
     probability: 10,
@@ -85,14 +86,15 @@ const Leads = () => {
     try {
       const data = {
         ...formData,
-        proposed_price: formData.proposed_price ? parseFloat(formData.proposed_price) : null,
+        offered_price: formData.offered_price ? parseFloat(formData.offered_price) : null,
+        agreed_price: formData.agreed_price ? parseFloat(formData.agreed_price) : null,
         expected_volume: formData.expected_volume ? parseInt(formData.expected_volume) : null
       };
       await createLead(data);
       toast.success('Lead created');
       setDialogOpen(false);
       setFormData({
-        lead_name: '', organization_id: '', product: '', proposed_price: '',
+        lead_name: '', organization_id: '', product: '', offered_price: '', agreed_price: '',
         expected_volume: '', stage: 'IDENTIFIED', probability: 10, status: 'OPEN',
         expected_close_date: '', sales_owner: '', source: '', remarks: ''
       });
