@@ -497,6 +497,9 @@ class FluxCRMTester:
         print("\n🧹 Cleaning up test data...")
         
         # Delete in reverse order of creation
+        if self.lead_note_id:
+            self.run_test("Delete Lead Note", "DELETE", f"lead-notes/{self.lead_note_id}", 200)
+        
         if self.document_id:
             self.run_test("Delete Document", "DELETE", f"documents/{self.document_id}", 200)
         
@@ -511,6 +514,9 @@ class FluxCRMTester:
         
         if self.org_id:
             self.run_test("Delete Organization", "DELETE", f"organizations/{self.org_id}", 200)
+        
+        if self.org_type_id:
+            self.run_test("Delete Organization Type", "DELETE", f"org-types/{self.org_type_id}", 200)
 
 def main():
     print("🚀 Starting Flux CRM Backend API Tests")
