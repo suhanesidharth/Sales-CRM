@@ -306,7 +306,7 @@ const Leads = () => {
             <SelectValue placeholder="All stages" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All stages</SelectItem>
+            <SelectItem value="all">All stages</SelectItem>
             {STAGES.map(s => (
               <SelectItem key={s} value={s}>{s}</SelectItem>
             ))}
@@ -317,7 +317,7 @@ const Leads = () => {
             <SelectValue placeholder="All statuses" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All statuses</SelectItem>
+            <SelectItem value="all">All statuses</SelectItem>
             {STATUSES.map(s => (
               <SelectItem key={s} value={s}>{s}</SelectItem>
             ))}
