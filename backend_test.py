@@ -103,6 +103,75 @@ class FluxCRMTester:
         )
         return success
 
+    def test_get_org_types(self):
+        """Test get organization types"""
+        success, response = self.run_test(
+            "Get Organization Types",
+            "GET",
+            "org-types",
+            200
+        )
+        if success:
+            print(f"   Found {len(response)} organization types")
+        return success
+
+    def test_create_org_type(self):
+        """Test create custom organization type"""
+        test_data = {
+            "name": "STARTUP",
+            "color": "bg-teal-500/20 text-teal-400 border-teal-500/30"
+        }
+        success, response = self.run_test(
+            "Create Organization Type",
+            "POST",
+            "org-types",
+            200,
+            data=test_data
+        )
+        if success and 'id' in response:
+            self.org_type_id = response['id']
+            print(f"   Organization Type ID: {self.org_type_id}")
+            return True
+        return False
+
+    def test_create_lead_note(self):
+        """Test create lead note/update"""
+        if not self.lead_id:
+            print("❌ Skipped - No lead ID available")
+            return False
+        
+        test_data = {
+            "lead_id": self.lead_id,
+            "content": "Had initial call with client. They are interested in our MRI solution.",
+            "update_type": "CALL"
+        }
+        success, response = self.run_test(
+            "Create Lead Note",
+            "POST",
+            "lead-notes",
+            200,
+            data=test_data
+        )
+        if success and 'id' in response:
+            self.lead_note_id = response['id']
+            print(f"   Lead Note ID: {self.lead_note_id}")
+            return True
+        return False
+
+    def test_get_lead_notes(self):
+        """Test get lead notes"""
+        params = {"lead_id": self.lead_id} if self.lead_id else None
+        success, response = self.run_test(
+            "Get Lead Notes",
+            "GET",
+            "lead-notes",
+            200,
+            params=params
+        )
+        if success:
+            print(f"   Found {len(response)} lead notes")
+        return success
+
     def test_create_organization(self):
         """Test organization creation"""
         test_data = {
