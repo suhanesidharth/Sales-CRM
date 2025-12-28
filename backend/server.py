@@ -504,10 +504,47 @@ async def delete_lead(lead_id: str, user: dict = Depends(get_current_user)):
     result = await db.leads.delete_one({"id": lead_id})
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Lead not found")
-    # Also delete related milestones and documents
+    # Also delete related milestones, documents and notes
     await db.milestones.delete_many({"lead_id": lead_id})
     await db.documents.delete_many({"lead_id": lead_id})
+    await db.lead_notes.delete_many({"lead_id": lead_id})
     return {"message": "Lead deleted"}
+
+# ==================== LEAD NOTES/UPDATES ROUTES ====================
+
+@api_router.post("/lead-notes", response_model=LeadNoteResponse)
+async def create_lead_note(note: LeadNoteCreate, user: dict = Depends(get_current_user)):
+    # Verify lead exists
+    lead = await db.leads.find_one({"id": note.lead_id})
+    if not lead:
+        raise HTTPException(status_code=404, detail="Lead not found")
+    
+    note_id = str(uuid.uuid4())
+    note_doc = {
+        "id": note_id,
+        "lead_id": note.lead_id,
+        "content": note.content,
+        "update_type": note.update_type,
+        "created_by": user["name"],
+        "created_at": datetime.now(timezone.utc).isoformat()
+    }
+    await db.lead_notes.insert_one(note_doc)
+    return LeadNoteResponse(**note_doc)
+
+@api_router.get("/lead-notes", response_model=List[LeadNoteResponse])
+async def get_lead_notes(lead_id: Optional[str] = None, user: dict = Depends(get_current_user)):
+    query = {}
+    if lead_id:
+        query["lead_id"] = lead_id
+    notes = await db.lead_notes.find(query, {"_id": 0}).sort("created_at", -1).to_list(1000)
+    return [LeadNoteResponse(**n) for n in notes]
+
+@api_router.delete("/lead-notes/{note_id}")
+async def delete_lead_note(note_id: str, user: dict = Depends(get_current_user)):
+    result = await db.lead_notes.delete_one({"id": note_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Note not found")
+    return {"message": "Note deleted"}
 
 # ==================== MILESTONE ROUTES ====================
 
