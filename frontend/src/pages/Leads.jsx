@@ -375,7 +375,7 @@ const Leads = () => {
                             <p className="text-xs text-muted-foreground truncate">{lead.organization_name}</p>
                             <div className="flex items-center justify-between mt-2">
                               <span className="text-xs font-mono text-muted-foreground">
-                                {lead.proposed_price ? `$${lead.proposed_price.toLocaleString()}` : '-'}
+                                {lead.offered_price ? `$${lead.offered_price.toLocaleString()}` : '-'}
                               </span>
                               <Badge variant="outline" className={`text-xs ${STATUS_COLORS[lead.status]}`}>
                                 {lead.status}
