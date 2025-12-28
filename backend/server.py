@@ -710,30 +710,31 @@ async def get_dashboard_analytics(user: dict = Depends(get_current_user)):
         count = await db.leads.count_documents({"status": status})
         leads_by_status[status] = count
     
-    # Leads by org type
-    org_types = ["HOSPITAL", "NGO", "GOVT", "CORPORATE"]
+    # Leads by org type - get all org types including custom ones
+    all_org_types = await db.organizations.distinct("type")
     leads_by_org_type = {}
-    for org_type in org_types:
+    for org_type in all_org_types:
         orgs = await db.organizations.find({"type": org_type}, {"id": 1, "_id": 0}).to_list(1000)
         org_ids = [o["id"] for o in orgs]
         count = await db.leads.count_documents({"organization_id": {"$in": org_ids}}) if org_ids else 0
         leads_by_org_type[org_type] = count
     
-    # Pipeline value (sum of proposed_price for open leads)
+    # Pipeline value (sum of offered_price for open leads)
     pipeline = db.leads.aggregate([
-        {"$match": {"status": "OPEN", "proposed_price": {"$ne": None}}},
-        {"$group": {"_id": None, "total": {"$sum": "$proposed_price"}}}
+        {"$match": {"status": "OPEN", "offered_price": {"$ne": None}}},
+        {"$group": {"_id": None, "total": {"$sum": "$offered_price"}}}
     ])
     pipeline_result = await pipeline.to_list(1)
     pipeline_value = pipeline_result[0]["total"] if pipeline_result else 0
     
-    # Won value
+    # Won value (agreed price for won leads)
     won_pipeline = db.leads.aggregate([
-        {"$match": {"status": "WON", "proposed_price": {"$ne": None}}},
-        {"$group": {"_id": None, "total": {"$sum": "$proposed_price"}}}
+        {"$match": {"status": "WON"}},
+        {"$group": {"_id": None, "offered": {"$sum": {"$ifNull": ["$offered_price", 0]}}, "agreed": {"$sum": {"$ifNull": ["$agreed_price", 0]}}}}
     ])
     won_result = await won_pipeline.to_list(1)
-    won_value = won_result[0]["total"] if won_result else 0
+    won_offered = won_result[0]["offered"] if won_result else 0
+    won_agreed = won_result[0]["agreed"] if won_result else 0
     
     # Win rate
     total_closed = leads_by_status.get("WON", 0) + leads_by_status.get("LOST", 0)
