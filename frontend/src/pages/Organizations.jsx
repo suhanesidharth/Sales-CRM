@@ -41,7 +41,7 @@ const Organizations = () => {
   const fetchOrganizations = async () => {
     try {
       const params = {};
-      if (filterType) params.type = filterType;
+      if (filterType && filterType !== 'all') params.type = filterType;
       const response = await getOrganizations(params);
       setOrganizations(response.data);
     } catch (error) {
